@@ -8,6 +8,7 @@ var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
+var del = require('del');
 
 // Image compression
 var imagemin = require('gulp-imagemin');
@@ -94,7 +95,13 @@ gulp.task('images', function() {
         .pipe(gulp.dest(DIST_PATH + '/images'));
 });
 
-gulp.task('default', ['images', 'styles', 'scripts'], function() {
+gulp.task('clean', function() {
+    return del.sync([
+        DIST_PATH
+    ])
+})
+
+gulp.task('default', ['clean', 'images', 'styles', 'scripts'], function() {
     console.log('starting default task');
 });
 
