@@ -9,10 +9,16 @@ var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
 
+// Image compression
+var imagemin = require('gulp-imagemin');
+var imageminPngquant = require('imagemin-pngquant');
+var imageminJpegRecompress = require('imagemin-jpeg-recompress');
+
 // File paths
 var SCRIPTS_PATH = 'public/scripts/**/*.js';
 var CSS_PATH = 'public/css/**/*.css';
 var DIST_PATH = 'public/dist';
+var IMAGES_PATH = 'public/images/**/*.{png,jpeg,jpg,svg,gif}'
 
 // Styles
 // gulp.task('styles', function() {
@@ -74,7 +80,18 @@ gulp.task('scripts', function() {
 
 // Images
 gulp.task('images', function() {
-    console.log('starting images task');
+    return gulp.src(IMAGES_PATH)
+        .pipe(imagemin(
+            [
+                imagemin.gifsicle(),
+                imagemin.jpegtran(),
+                imagemin.optipng(),
+                imagemin.svgo(),
+                imageminPngquant(),
+                imageminJpegRecompress()
+            ]
+        ))
+        .pipe(gulp.dest(DIST_PATH + '/images'));
 });
 
 gulp.task('default', ['images', 'styles', 'scripts'], function() {
