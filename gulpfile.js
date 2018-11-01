@@ -9,6 +9,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
 var babel = require('gulp-babel');
 var del = require('del');
+var zip = require('gulp-zip');
 
 // Image compression
 var imagemin = require('gulp-imagemin');
@@ -99,7 +100,13 @@ gulp.task('clean', function() {
     return del.sync([
         DIST_PATH
     ])
-})
+});
+
+gulp.task('export', function() {
+    return gulp.src('public/**/*')
+        .pipe(zip('website.zip'))
+        .pipe(gulp.dest('./'));
+});
 
 gulp.task('default', ['clean', 'images', 'styles', 'scripts'], function() {
     console.log('starting default task');

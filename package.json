@@ -25,6 +25,7 @@
     "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^3.0.1",
+    "gulp-zip": "^4.2.0",
     "imagemin-jpeg-recompress": "^5.0.0",
     "imagemin-pngquant": "^5.0.0"
   },
