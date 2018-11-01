@@ -7,6 +7,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 var sass = require('gulp-sass');
+var babel = require('gulp-babel');
 
 // File paths
 var SCRIPTS_PATH = 'public/scripts/**/*.js';
@@ -61,6 +62,9 @@ gulp.task('scripts', function() {
             this.emit('end');
         }))
         .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
         .pipe(uglify())
         .pipe(concat('scripts.js'))
         .pipe(sourcemaps.write())
@@ -73,11 +77,11 @@ gulp.task('images', function() {
     console.log('starting images task');
 });
 
-gulp.task('default', function() {
+gulp.task('default', ['images', 'styles', 'scripts'], function() {
     console.log('starting default task');
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['default'], function() {
     console.log('starting watch task');
     require('./server.js');
     livereload.listen();
